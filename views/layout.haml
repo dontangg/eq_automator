@@ -6,5 +6,14 @@
     %link{href: '/css/styles.css', rel: 'stylesheet'}
     %script{src: '/js/bootstrap.min.js'}
   %body
+    %nav.navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.brand{href: url('/')} EQ Automator
+          %ul.nav
+            %li.active
+              %a{href: url('/')} Home
+            %li
+              %a{href: url('/contact_quorum')} Contact Form
     .container
       =yield

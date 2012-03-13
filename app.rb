@@ -13,3 +13,6 @@ get '/' do
   haml :index
 end
 
+get '/contact_quorum' do
+end
+
