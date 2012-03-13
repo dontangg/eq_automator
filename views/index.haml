@@ -1,0 +1,17 @@
+- content_for(:title) do
+  Jessie's Brook EQ Automator
+
+%header
+  %h1 Jessie's Brook EQ Automator
+  %blockquote
+    %p= @quote['quote']
+    %small= @quote['author']
+
+  .row
+    .span12
+      .well
+        %p
+          Click the link below to save time contacting the elders.
+        %a{href: url('/')}
+          %i.icon-pencil
+          Contact the quorum
