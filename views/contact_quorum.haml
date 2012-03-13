@@ -1,0 +1,11 @@
+- content_for(:title) do
+  Contact The Quorum | Jessie's Brook EQ Automator
+
+%header
+  %h1 Contact The Quorum
+  = @google_client.authorization.access_token
+
+  .row
+    %pre
+      = @test
+ 

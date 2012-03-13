@@ -1,0 +1,11 @@
+development:
+  host: localhost
+  database: eqa
+
+test:
+  host: localhost
+  database: eqa_test
+
+production:
+  uri: <%= ENV['MONGOLAB_URI'] %>
+
