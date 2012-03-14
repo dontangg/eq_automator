@@ -14,9 +14,10 @@ body {
           transition: all .2s linear;
 }
 .contacts {
-  padding-right: 50px;
-  line-height: 1.8;
+  overflow: auto;
 }
 .contacts .badge {
   margin-right: 10px;
+  margin-bottom: 4px;
+  float:left;
 }
