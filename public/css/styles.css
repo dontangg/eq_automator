@@ -21,3 +21,11 @@ body {
   margin-bottom: 4px;
   float:left;
 }
+.form-contact textarea {
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+}
+

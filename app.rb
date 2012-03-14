@@ -100,10 +100,14 @@ end
 get '/contact_quorum' do
   access_spreadsheet
 
-#https://spreadsheets.google.com/feeds/spreadsheets/private/full/?access_token=ya29.AHES6ZRnWwnAbh2BcSxJsr6S_isoD2zf_eJX_yN6MqL5Jpc&v=3.0
   sheet = ContactSpreadsheet.new @google_client.authorization.access_token
 
   @contacts = sheet.list_contacts
+
+  @contact_groups = @contacts.map do |contact|
+    supervisor = contact["htdistrictsupervisor"].strip
+    supervisor.empty? ? nil : supervisor
+  end.uniq.compact.sort
 
   haml :contact_quorum
 end

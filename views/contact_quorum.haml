@@ -1,21 +1,38 @@
 - content_for(:title) do
   Contact The Quorum | Jessie's Brook EQ Automator
 
-%header
+%header.page-header
   %h1 Contact The Quorum
 
 %section
-  .well.contacts
-    - @contacts.each do |contact|
-      %span.badge.badge-info
-        - unless contact['e-mailaddress'].empty?
-          %i.icon-white.icon-envelope
-        - unless contact['mobilephone'].empty?
-          %i.icon-white.icon-comment
-        = contact['firstname'] + ' ' + contact['lastname']
-        %input{type: 'hidden', data: {type: 'phone'}, value: contact['mobilephone']}
-        %input{type: 'hidden', data: {type: 'email'}, value: contact['e-mailaddress']}
+  %form.form-contact
+    %label{for: 'contact_groups'} To
+    %select#contact_groups
+      %option Everyone
+      - @contact_groups.each do |group|
+        %option{value: group}= "#{group}'s District"
 
-  - @contacts.each do |contact|
+    .well.contacts
+      - @contacts.each do |contact|
+        %span.badge.badge-info
+          - unless contact['e-mailaddress'].empty?
+            %i.icon-white.icon-envelope
+          - unless contact['mobilephone'].empty?
+            %i.icon-white.icon-comment
+          = contact['firstname'] + ' ' + contact['lastname']
+          %input{type: 'hidden', data: {type: 'phone'}, value: contact['mobilephone']}
+          %input{type: 'hidden', data: {type: 'email'}, value: contact['e-mailaddress']}
+
+    %label{for: 'contact_message'} Message
+    %textarea#contact_message{rows: 3}
+    %div.form-actions
+      %button.btn.btn-primary{type: 'submit'}
+        %i.icon-white.icon-comment
+        SMS
+      %button.btn.btn-primary{type: 'submit'}
+        %i.icon-white.icon-envelope
+        Email
+
+  -# @contacts.each do |contact|
     .row= contact
  

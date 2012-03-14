@@ -11,9 +11,9 @@
         .container
           %a.brand{href: url('/')} EQ Automator
           %ul.nav
-            %li.active
+            %li{class: request.url == url('/') ? 'active' : nil}
               %a{href: url('/')} Home
-            %li
+            %li{class: request.url == url('/contact_quorum') ? 'active' : nil}
               %a{href: url('/contact_quorum')} Contact Form
     .container
-      =yield
+      = yield
