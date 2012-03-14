@@ -103,7 +103,7 @@ get '/contact_quorum' do
 #https://spreadsheets.google.com/feeds/spreadsheets/private/full/?access_token=ya29.AHES6ZRnWwnAbh2BcSxJsr6S_isoD2zf_eJX_yN6MqL5Jpc&v=3.0
   sheet = ContactSpreadsheet.new @google_client.authorization.access_token
 
-  @test = sheet.list_spreadsheets
+  @contacts = sheet.list_contacts
 
   haml :contact_quorum
 end

@@ -13,3 +13,10 @@ body {
      -moz-transition: all .2s linear;
           transition: all .2s linear;
 }
+.contacts {
+  padding-right: 50px;
+  line-height: 1.8;
+}
+.contacts .badge {
+  margin-right: 10px;
+}
