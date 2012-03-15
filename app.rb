@@ -6,11 +6,10 @@ require 'sinatra/reloader' if development?
 require 'google/api_client'
 require 'haml'
 require 'moonshado-sms'
+require 'uri'
 require './lib/contact_spreadsheet'
 
 use Rack::Session::Pool, :expire_after => 86400 # 1 day
-
-config_file settings.root + '/config/config.yml'
 
 Mongoid.load!(settings.root + '/config/mongoid.yml')
 
@@ -61,8 +60,18 @@ end
 helpers do
   def access_spreadsheet
     @google_client = Google::APIClient.new
-    @google_client.authorization.client_id = settings.google_api_client_id
-    @google_client.authorization.client_secret = settings.google_api_client_secret
+    
+    if production?
+      @google_client.authorization.client_id = ENV['GAPI_ID']
+      @google_client.authorization.client_secret = ENV['GAPI_SECRET']
+    else
+      config_file settings.root + '/config/config.yml'
+      @google_client.authorization.client_id = settings.google_api_client_id
+      @google_client.authorization.client_secret = settings.google_api_client_secret
+    end
+    logger.info @google_client.authorization.client_id
+    logger.info @google_client.authorization.client_secret
+
     @google_client.authorization.scope = 'https://spreadsheets.google.com/feeds'
     @google_client.authorization.redirect_uri = to('/oauth2callback')
     @google_client.authorization.code = params[:code] if params[:code]
@@ -87,13 +96,19 @@ end
 
 get '/oauth2callback' do
   access_spreadsheet
+
+  # Clean out old tokens
+  TokenPair.where(:issued_at.lte => Time.now - 1.day).delete_all
+
   # Request the access token
   @google_client.authorization.fetch_access_token!
+
   # Persist the token here
   token_pair = session[:token_id] ? TokenPair.find(session[:token_id]) : TokenPair.new
   token_pair.update_token!(@google_client.authorization)
   token_pair.save
   session[:token_id] = token_pair.id
+
   redirect to('/contact_quorum')
 end
 
@@ -102,6 +117,8 @@ get '/' do
   quotes_filename = settings.root + '/quotes.yml'
   quotes = YAML.load_file quotes_filename
   @quote = quotes[rand(quotes.size)]
+
+  @alert_success = params[:alertsuccess]
 
   haml :index
 end
@@ -126,6 +143,7 @@ post '/send_sms' do
 
   i = 1
   numbers = []
+  credits = 0
   while params["c#{i}"]
     if params["c#{i}"][:enabled] == "true"
       phone = params["c#{i}"][:phone].scan(/\d/).join
@@ -134,13 +152,15 @@ post '/send_sms' do
       numbers << phone
 
       sms = Moonshado::Sms.new(phone, message)
-      sms.deliver_sms
+      result = sms.deliver_sms
+      credits = result[:credit]
     end
     i = i.next
   end
 
   logger.info "sent sms '#{message}' to #{numbers.join(', ')}"
 
-  redirect to('/')
+  alert_message = URI::encode("Your message was successfully sent to #{numbers.size} phones. (#{credits} credits left)")
+  redirect to("/?alertsuccess=#{alert_message}")
 end
 

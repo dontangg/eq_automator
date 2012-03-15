@@ -1,6 +1,11 @@
 - content_for(:title) do
   Jessie's Brook EQ Automator
 
+- if @alert_success
+  %div.alert.alert-success
+    %a.close{data: {dismiss: 'alert'}} ×
+    = @alert_success
+
 %header
   %h1 Jessie's Brook EQ Automator
   %p.lead A collection of tools to speed things up.

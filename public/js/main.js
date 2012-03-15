@@ -1,5 +1,6 @@
 $(function() {
   $('.dropdown-toggle').dropdown();
+  $('.alert').alert();
 
   var enableContacts = function(items) {
     $(items)
