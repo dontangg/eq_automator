@@ -3,12 +3,12 @@ $(function() {
 
   var enableContacts = function(items) {
     $(items)
-      .addClass("badge-info")
+      .addClass("badge-success")
       .find('.is-enabled').val('true');
   }
   var disableContacts = function(items) {
     $(items)
-      .removeClass("badge-info")
+      .removeClass("badge-success")
       .find('.is-enabled').val('');
   }
 
@@ -16,7 +16,7 @@ $(function() {
     $this = $(this);
     $('.nav-pills li').removeClass('active');
     $('#filter_custom').closest('li').addClass('active');
-    if ($this.hasClass("badge-info")) {
+    if ($this.hasClass("badge-success")) {
       disableContacts($this);
     } else {
       enableContacts($this);
@@ -35,6 +35,12 @@ $(function() {
     $(this).closest('li').addClass('active');
   });
 
+  $('#filter_custom').on('click', function() {
+    $('.nav-pills li').removeClass('active');
+    $(this).closest('li').addClass('active');
+  });
+ 
+
   $('#filter_district ul a').on('click', function() {
     disableContacts($('.contacts .badge'));
     enableContacts($('.contacts .badge[data-district=' + $(this).text() + ']'));
@@ -43,7 +49,7 @@ $(function() {
     $('#filter_district').addClass('active');
   });
 
-  $('#send_email').on('click, function() {
+  $('#send_email').on('click', function() {
     window.location = "mailto:";
   });
   

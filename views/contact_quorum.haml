@@ -27,7 +27,7 @@
       - i = 0
       - @contacts.each do |contact|
         - i = i.next
-        %span.badge.badge-info{data: {district: contact['htdistrictsupervisor']}, title: "email: #{contact['e-mailaddress'].empty? ? "&lt;none&gt;" : contact['e-mailaddress']}<br />phone: #{contact['mobilephone']}"}
+        %span.badge.badge-success{data: {district: contact['htdistrictsupervisor']}, title: "email: #{contact['e-mailaddress'].empty? ? "&lt;none&gt;" : contact['e-mailaddress']}<br />phone: #{contact['mobilephone']}"}
           - unless contact['e-mailaddress'].empty?
             %i.icon-white.icon-envelope
           - unless contact['mobilephone'].empty?

@@ -29,3 +29,14 @@ body {
   -ms-box-sizing: border-box;
 }
 
+.nav.nav-pills .active .dropdown-toggle .caret {
+  border-top-color: #fff;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.nav.nav-pills .active .dropdown-toggle:hover .caret, .nav.nav-pills .active .dropdown-toggle .caret:hover {
+  border-top-color: #000;
+}
+.nav.nav-pills .active.open .dropdown-toggle:hover .caret, .nav.nav-pills .active.open .dropdown-toggle .caret:hover {
+  border-top-color: #fff;
+}
