@@ -102,10 +102,10 @@ get '/contact_quorum' do
 
   sheet = ContactSpreadsheet.new @google_client.authorization.access_token
 
-  @contacts = sheet.list_contacts
+  @contacts = sheet.list_contacts.sort { |x, y| x['lastname'] <=> y['lastname'] }
 
   @contact_groups = @contacts.map do |contact|
-    supervisor = contact["htdistrictsupervisor"].strip
+    supervisor = contact["htdistrictsupervisor"]
     supervisor.empty? ? nil : supervisor
   end.uniq.compact.sort
 

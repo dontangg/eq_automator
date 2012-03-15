@@ -39,7 +39,12 @@ class ContactSpreadsheet
 
       # Look for all the nodes in the gsx namespace (http://schemas.google.com/spreadsheets/2006/extended)
       entry.xpath(".//*[namespace-uri()='http://schemas.google.com/spreadsheets/2006/extended']").each do |col|
-        data[col.name] = col.content
+        phone_regex = /\d{3}.{0,2}\d{3}.+\d{4}/
+        data[col.name] = if col.name =~ /phone/ && col.content =~ phone_regex
+          col.content.match(phone_regex)[0]
+        else
+          col.content
+        end.strip
       end
 
       data
