@@ -112,3 +112,7 @@ get '/contact_quorum' do
   haml :contact_quorum
 end
 
+post '/send_sms' do
+  redirect to('/')
+end
+

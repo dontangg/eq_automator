@@ -5,7 +5,7 @@
   %h1 Contact The Quorum
 
 %section
-  %form.form-contact
+  %form.form-contact{action: url('/send_sms'), method: 'post'}
     %ul.nav.nav-pills
       %li.active
         %a#filter_all{href: 'javascript:void(0)'} All
