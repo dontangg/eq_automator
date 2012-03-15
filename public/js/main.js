@@ -42,5 +42,9 @@ $(function() {
     $(this).closest('li').addClass('active');
     $('#filter_district').addClass('active');
   });
+
+  $('#send_email').on('click, function() {
+    window.location = "mailto:";
+  });
   
 });

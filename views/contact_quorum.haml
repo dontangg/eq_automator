@@ -33,8 +33,8 @@
           - unless contact['mobilephone'].empty?
             %i.icon-white.icon-comment
           = contact['firstname'] + ' ' + contact['lastname']
-          %input{name: "c#{i}[phone]", type: 'hidden', value: contact['mobilephone']}
-          %input{name: "c#{i}[email]", type: 'hidden', value: contact['e-mailaddress']}
+          %input.phone{name: "c#{i}[phone]", type: 'hidden', value: contact['mobilephone']}
+          %input.email{name: "c#{i}[email]", type: 'hidden', value: contact['e-mailaddress']}
           %input.is-enabled{name: "c#{i}[enabled]", type: 'hidden', value: 'true'}
 
     %label{for: 'contact_message'} Message
@@ -43,7 +43,7 @@
       %button.btn.btn-primary{type: 'submit'}
         %i.icon-white.icon-comment
         SMS
-      %button.btn.btn-primary{type: 'submit'}
+      %button.btn.btn-primary#send_email{type: 'submit'}
         %i.icon-white.icon-envelope
         Email
 
