@@ -5,6 +5,7 @@ require 'mongoid'
 require 'sinatra/reloader' if development?
 require 'google/api_client'
 require 'haml'
+require 'moonshado-sms'
 require './lib/contact_spreadsheet'
 
 use Rack::Session::Pool, :expire_after => 86400 # 1 day
@@ -12,6 +13,14 @@ use Rack::Session::Pool, :expire_after => 86400 # 1 day
 config_file settings.root + '/config/config.yml'
 
 Mongoid.load!(settings.root + '/config/mongoid.yml')
+
+Moonshado::Sms.configure do |config|
+  if production?
+    config.api_key = ENV['MOONSHADOSMS_URL']
+  else
+    config.production_environment = false
+  end
+end
 
 # Set up our token store
 class TokenPair
