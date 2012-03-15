@@ -122,6 +122,25 @@ get '/contact_quorum' do
 end
 
 post '/send_sms' do
+  message = params[:message]
+
+  i = 1
+  numbers = []
+  while params["c#{i}"]
+    if params["c#{i}"][:enabled] == "true"
+      phone = params["c#{i}"][:phone].scan(/\d/).join
+      phone = "801#{phone}" if phone.size == 7
+      phone = "1#{phone}" if phone.size == 10
+      numbers << phone
+
+      sms = Moonshado::Sms.new(phone, message)
+      sms.deliver_sms
+    end
+    i = i.next
+  end
+
+  logger.info "sent sms '#{message}' to #{numbers.join(', ')}"
+
   redirect to('/')
 end
 

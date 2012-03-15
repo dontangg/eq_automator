@@ -49,8 +49,18 @@ $(function() {
     $('#filter_district').addClass('active');
   });
 
-  $('#send_email').on('click', function() {
-    window.location = "mailto:";
+  $('#send_email').on('click', function(event) {
+    event.preventDefault();
+    emails = [];
+    $('.contacts .badge').each(function(i, item) {
+      $item = $(item);
+      if ($item.find('.is-enabled').val() == 'true') {
+        email = $.trim($item.find('.email').val());
+        if (email != "")
+          emails.push(email);
+      }
+    });
+    window.location = "mailto:" + emails.join(', ') + "?body=" + encodeURIComponent($('#contact_message').val());
   });
   
 });

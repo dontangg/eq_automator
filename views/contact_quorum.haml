@@ -38,7 +38,7 @@
           %input.is-enabled{name: "c#{i}[enabled]", type: 'hidden', value: 'true'}
 
     %label{for: 'contact_message'} Message
-    %textarea#contact_message{rows: 3}
+    %textarea#contact_message{name: 'message', rows: 3}
     %div.form-actions
       %button.btn.btn-primary{type: 'submit'}
         %i.icon-white.icon-comment
